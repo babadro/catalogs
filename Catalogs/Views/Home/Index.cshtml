@@ -39,32 +39,58 @@
 </div>
 
 <div>
+    <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Применить фильтры
+    </button>
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-                        <label for="formGroupExampleInput">Example label</label>
-                    </div>
-                </th>
-                <th scope="col">
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Булево</label>
-                    </div>
-                </th>
-                <th scope="col"><input type="number" class="form-control" placeholder="Число"></th>
-                <th scope="col">
-                    <div class="form-group row">
-                        <div class="col-10">
-                            <input class="form-control" type="datetime-local" id="example-month-input">
-                        </div>
-                    </div>
-                </th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="" placeholder="Строка">
+                </div>
+                Строка
+            </th>
+            <th scope="col">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="survey" id="Radios1" value="Yes">
+                        True
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="survey" id="Radios2" value="No">
+                        False
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="survey" id="Radios3" value="">
+                        All
+                    </label>
+                </div>
+                Булево
+            </th>
+            <th scope="col">
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="От">
+                    <input type="number" class="form-control" placeholder="До">
+                </div>
+                Число
+            </th>
+            <th scope="col">
+                <div class="form-group">
+                    <input class="form-control" type="datetime-local" id="">
+                    
+                    <input class="form-control" type="datetime-local" id="">
+                </div>
+                Дата
+            </th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
         <tr>
