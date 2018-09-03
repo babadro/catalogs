@@ -40,85 +40,91 @@
 
 <div>
     <button type="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-search"></span> Применить фильтры
+        <span class="glyphicon glyphicon-search"></span> Apply filters
+    </button>
+    <button type="button" class="btn btn-danger">
+        <span class="glyphicon"></span> Reset filters
     </button>
     <table class="table table-hover">
         <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="" placeholder="Строка">
-                </div>
-                Строка
-            </th>
-            <th scope="col">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="survey" id="Radios1" value="Yes">
-                        True
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="survey" id="Radios2" value="No">
-                        False
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="survey" id="Radios3" value="">
-                        All
-                    </label>
-                </div>
-                Булево
-            </th>
-            <th scope="col">
-                <div class="form-group">
-                    <input type="number" class="form-control" placeholder="От">
-                    <input type="number" class="form-control" placeholder="До">
-                </div>
-                Число
-            </th>
-            <th scope="col">
-                <div class="form-group">
-                    <input class="form-control" type="datetime-local" id="">
-                    
-                    <input class="form-control" type="datetime-local" id="">
-                </div>
-                Дата
-            </th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="Строка">
+                    </div>
+                    Строка
+                </th>
+                <th scope="col">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="survey" id="Radios1" value="Yes">
+                            True
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="survey" id="Radios2" value="No">
+                            False
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="survey" id="Radios3" value="">
+                            All
+                        </label>
+                    </div>
+                    Булево
+                </th>
+                <th scope="col">
+                    <div class="form-group">
+                        From:
+                        <input type="number" class="form-control">
+                        To:
+                        <input type="number" class="form-control">
+                    </div>
+                    Число
+                </th>
+                <th scope="col">
+                    <div class="form-group">
+                        From:
+                        <input class="form-control" type="datetime-local" id="">
+                        To:
+                        <input class="form-control" type="datetime-local" id="">
+                    </div>
+                    Дата
+                </th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Otto</td>
-            <td>True</td>
-            <td>311</td>
-            <td>25 декабря</td>
-            <td>
-                <button type="button" class="btn btn-indigo btn-sm m-0">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-indigo btn-sm m-0">Публикация</button>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Otto</td>
-            <td>True</td>
-            <td>311</td>
-            <td>25 декабря</td>
-            <td>
-                <button type="button" class="btn btn-indigo btn-sm m-0">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-indigo btn-sm m-0">Публикация</button>
-            </td>
-        </tr>
+            <tr>
+                <td>1</td>
+                <td>Otto</td>
+                <td>True</td>
+                <td>311</td>
+                <td>25 декабря</td>
+                <td>
+                    <button type="button" class="btn btn-indigo btn-sm m-0">Удаление</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-indigo btn-sm m-0">Публикация</button>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Otto</td>
+                <td>True</td>
+                <td>311</td>
+                <td>25 декабря</td>
+                <td>
+                    <button type="button" class="btn btn-indigo btn-sm m-0">Удаление</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-indigo btn-sm m-0">Публикация</button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
