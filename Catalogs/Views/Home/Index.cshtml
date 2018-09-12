@@ -2,42 +2,42 @@
 @using System;
 
 <br />
+<form>
+    <div class="form-group">
+        <label for="CatalogName">Название справочника</label>
+        <input type="text" class="form-control" id="CatalogName" placeholder="Название справочника">
+    </div>
+    <button type="button" class="btn btn-primary">Сохранить справочник</button>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Название поля</th>
+                <th>Тип поля</th>
+                <th><button type="button" class="btn btn-info j-add-field">Добавить поле</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="j-field">
+                <td><input type="text" class="form-control" placeholder="Название поля"></td>
+                <td>
+                    <select class="form-control">
+                        <option value="" disabled selected>Выберите тип</option>
+                        @foreach (FieldType ftype in (FieldType[])Enum.GetValues(typeof(FieldType)))
+                        {
+                            <option value="@ftype">@Enum.GetName(typeof(FieldType), ftype)</option>
+                        }
+                    </select>
+                </td>
+                <td><button type="button" class="btn btn-danger j-remove-field">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
 <div>
     <button type="button" class="btn btn-sm">Добавить справочник</button>
     <br />
     <br />
-
-    <form>
-        <div class="form-group">
-            <label for="CatalogName">Название справочника</label>
-            <input type="text" class="form-control" id="CatalogName" placeholder="Название справочника">
-        </div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Название поля</th>
-                    <th>Тип поля</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="Название поля"></td>
-                    <td>
-                        <select class="form-control">
-                            <option value="" disabled selected>Выберите тип</option>
-                            @foreach (FieldType ftype in (FieldType[])Enum.GetValues(typeof(FieldType)))
-                            {
-                                <option value="@ftype">@Enum.GetName(typeof(FieldType), ftype)</option>
-                            }
-
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
-    
-
     <table class="table table-hover">
         <thead>
             <tr>
@@ -212,14 +212,32 @@
 
 @section scripts{
     <script>
-        $('button[data-catalogid]').click(
-            function() {
-                var $this = $(this),
-                    catalogId = $this.data('catalogid');
-                var selector = '[data-catalogid="' + catalogId + '"]';
-                $('tr' + selector).toggleClass('hidden');
-            }
-        )
+        (function ($) {
+            var fieldSl = '.j-field';
+
+            $('button[data-catalogid]').click(
+                function() {
+                    var $this = $(this),
+                        catalogId = $this.data('catalogid');
+                    var selector = '[data-catalogid="' + catalogId + '"]';
+                    $('tr' + selector).toggleClass('hidden');
+                }
+            );
+
+            $('.j-add-field').click(function () {
+                var $last = $(fieldSl).last();
+                $last.clone().insertAfter($last);
+                removeByClick();
+            });
+
+            function removeByClick() {
+                $('.j-remove-field').off('click').on('click', function () {
+                    if ($(fieldSl).length > 1)
+                        $(this).closest('tr').remove();
+                });
+            };
+            removeByClick();
+        })(jQuery);
     </script>
 }
 
