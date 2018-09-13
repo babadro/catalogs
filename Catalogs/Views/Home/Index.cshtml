@@ -2,40 +2,9 @@
 @using System;
 
 <br />
-<form>
-    <div class="form-group">
-        <label for="CatalogName">Название справочника</label>
-        <input type="text" class="form-control" id="CatalogName" placeholder="Название справочника">
-    </div>
-    <button type="button" class="btn btn-primary">Сохранить справочник</button>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Название поля</th>
-                <th>Тип поля</th>
-                <th><button type="button" class="btn btn-info j-add-field">Добавить поле</button></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="j-field">
-                <td><input type="text" class="form-control" placeholder="Название поля"></td>
-                <td>
-                    <select class="form-control">
-                        <option value="" disabled selected>Выберите тип</option>
-                        @foreach (FieldType ftype in (FieldType[])Enum.GetValues(typeof(FieldType)))
-                        {
-                            <option value="@ftype">@Enum.GetName(typeof(FieldType), ftype)</option>
-                        }
-                    </select>
-                </td>
-                <td><button type="button" class="btn btn-danger j-remove-field">Remove</button></td>
-            </tr>
-        </tbody>
-    </table>
-</form>
 
-<div>
-    <button type="button" class="btn btn-sm">Добавить справочник</button>
+<div class="j-main-container">
+    <button type="button" class="btn btn-sm j-add-catalog">Добавить справочник</button>
     <br />
     <br />
     <table class="table table-hover">
@@ -76,6 +45,7 @@
                 <td>
                     <button type="button" class="btn btn-sm">Просмотр</button>
                 </td>
+                <td></td>
             </tr>
             <tr class="success hidden" data-catalogid="1">
                 <td>1</td>
@@ -87,6 +57,7 @@
                 <td>
                     <button type="button" class="btn btn-sm">Просмотр</button>
                 </td>
+                <td></td>
             </tr>
             <tr class="success hidden" data-catalogid="1">
                 <td>1</td>
@@ -98,6 +69,7 @@
                 <td>
                     <button type="button" class="btn btn-sm">Просмотр</button>
                 </td>
+                <td></td>
             </tr>
             <tr>
                 <td>1</td>
@@ -119,101 +91,16 @@
     </table>
 </div>
 
-<div>
-    <button type="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-search"></span> Apply filters
-    </button>
-    <button type="button" class="btn btn-danger">
-        <span class="glyphicon"></span> Reset filters
-    </button>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="" placeholder="Строка">
-                    </div>
-                    Строка
-                </th>
-                <th scope="col">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="survey" id="Radios1" value="Yes">
-                            True
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="survey" id="Radios2" value="No">
-                            False
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="survey" id="Radios3" value="">
-                            All
-                        </label>
-                    </div>
-                    Булево
-                </th>
-                <th scope="col">
-                    <div class="form-group">
-                        From:
-                        <input type="number" class="form-control">
-                        To:
-                        <input type="number" class="form-control">
-                    </div>
-                    Число
-                </th>
-                <th scope="col">
-                    <div class="form-group">
-                        From:
-                        <input class="form-control" type="datetime-local" id="">
-                        To:
-                        <input class="form-control" type="datetime-local" id="">
-                    </div>
-                    Дата
-                </th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Otto</td>
-                <td>True</td>
-                <td>311</td>
-                <td>25 декабря</td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Публикация</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Otto</td>
-                <td>True</td>
-                <td>311</td>
-                <td>25 декабря</td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Публикация</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
 @section scripts{
     <script>
         (function ($) {
-            var fieldSl = '.j-field';
+            var fieldSl = '.j-field', $container = $('.j-main-container');
+
+            $('.j-add-catalog').click(function() {
+                $.ajax('@Url.Action("Add")').done(function(resp) {
+                    $container.html(resp);
+                });
+            });
 
             $('button[data-catalogid]').click(
                 function() {
@@ -225,8 +112,9 @@
             );
 
             $('.j-add-field').click(function () {
-                var $last = $(fieldSl).last();
+                var $last = lastField();
                 $last.clone().insertAfter($last);
+                lastField().find('input').val('');
                 removeByClick();
             });
 
@@ -236,6 +124,9 @@
                         $(this).closest('tr').remove();
                 });
             };
+
+            function lastField() { return $(fieldSl).last(); };
+
             removeByClick();
         })(jQuery);
     </script>

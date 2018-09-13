@@ -1,0 +1,38 @@
+﻿@using Domain
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<form>
+    <div class="form-group">
+        <label for="CatalogName">Название справочника</label>
+        <input type="text" class="form-control" id="CatalogName" placeholder="Название справочника">
+    </div>
+    <button type="button" class="btn btn-primary">Сохранить справочник</button>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Название поля</th>
+            <th>Тип поля</th>
+            <th><button type="button" class="btn btn-info j-add-field">Добавить поле</button></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="j-field">
+            <td><input type="text" class="form-control" placeholder="Название поля"></td>
+            <td>
+                <select class="form-control">
+                    <option value="" disabled selected>Выберите тип</option>
+                    @foreach (FieldType ftype in (FieldType[])Enum.GetValues(typeof(FieldType)))
+                    {
+                        <option value="@ftype">@Enum.GetName(typeof(FieldType), ftype)</option>
+                    }
+                </select>
+            </td>
+            <td><button type="button" class="btn btn-danger j-remove-field">Remove</button></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+

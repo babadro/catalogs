@@ -14,5 +14,17 @@ namespace Catalogs.Controllers
 
             return View();
         }
+
+        public ViewResult Add()
+        {
+            ViewBag.Title = "Add catalog";
+            return View();
+        }
+
+        public ViewResult Catalog()
+        {
+            ViewBag.Title = "Catalog";
+            return View();
+        }
     }
 }
