@@ -1,94 +1,7 @@
-﻿@using Domain;
-@using System;
-
-<br />
+﻿<br/>
 
 <div class="j-main-container">
-    <button type="button" class="btn btn-sm j-add-catalog">Добавить справочник</button>
-    <br />
-    <br />
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Название справочника</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Otto</td>
-                <td>
-                    <button type="button" class="btn btn-sm" data-catalogid="1">Версии</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Просмотр</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Публикация</button>
-                </td>
-            </tr>
-            <tr class="success hidden" data-catalogid="1">
-                <td>1</td>
-                <td>Otto, версия: "V1"</td>
-                <td></td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Просмотр</button>
-                </td>
-                <td></td>
-            </tr>
-            <tr class="success hidden" data-catalogid="1">
-                <td>1</td>
-                <td>Otto, версия: "V1"</td>
-                <td></td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Просмотр</button>
-                </td>
-                <td></td>
-            </tr>
-            <tr class="success hidden" data-catalogid="1">
-                <td>1</td>
-                <td>Otto, версия: "V1"</td>
-                <td></td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Просмотр</button>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Otto</td>
-                <td>
-                    Не опубликовано
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Удаление</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Просмотр</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm">Публикация</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    @Html.Action("Catalogs")
 </div>
 
 @section scripts{
@@ -96,14 +9,20 @@
         (function ($) {
             var fieldSl = '.j-field', $container = $('.j-main-container');
 
-            $('.j-add-catalog').click(function() {
+            $('.j-catalog-list').click(function (e) {
+                e.preventDefault();
+                $.ajax('@Url.Action("Catalogs")').done(function(resp) {
+                    $container.html(resp);
+                });
+            });
+
+            $container.on('click', '.j-add-catalog', function() {
                 $.ajax('@Url.Action("Add")').done(function(resp) {
                     $container.html(resp);
                 });
             });
 
-            $('button[data-catalogid]').click(
-                function() {
+            $container.on('click', 'button[data-catalogid]', function() {
                     var $this = $(this),
                         catalogId = $this.data('catalogid');
                     var selector = '[data-catalogid="' + catalogId + '"]';
@@ -111,23 +30,20 @@
                 }
             );
 
-            $('.j-add-field').click(function () {
+            $container.on('click', '.j-add-field', function () {
                 var $last = lastField();
                 $last.clone().insertAfter($last);
                 lastField().find('input').val('');
-                removeByClick();
             });
 
-            function removeByClick() {
-                $('.j-remove-field').off('click').on('click', function () {
+            $container.on('click',
+                '.j-remove-field',
+                function() {
                     if ($(fieldSl).length > 1)
                         $(this).closest('tr').remove();
                 });
-            };
 
             function lastField() { return $(fieldSl).last(); };
-
-            removeByClick();
         })(jQuery);
     </script>
 }

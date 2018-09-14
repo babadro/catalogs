@@ -1,0 +1,89 @@
+﻿@{
+    Layout = null;
+}
+
+<button type="button" class="btn btn-sm j-add-catalog">Добавить справочник</button>
+<br />
+<br />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Название справочника</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Otto</td>
+            <td>
+                <button type="button" class="btn btn-sm" data-catalogid="1">Версии</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Удаление</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Просмотр</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Публикация</button>
+            </td>
+        </tr>
+        <tr class="success hidden" data-catalogid="1">
+            <td>1</td>
+            <td>Otto, версия: "V1"</td>
+            <td></td>
+            <td>
+                <button type="button" class="btn btn-sm">Удаление</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Просмотр</button>
+            </td>
+            <td></td>
+        </tr>
+        <tr class="success hidden" data-catalogid="1">
+            <td>1</td>
+            <td>Otto, версия: "V1"</td>
+            <td></td>
+            <td>
+                <button type="button" class="btn btn-sm">Удаление</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Просмотр</button>
+            </td>
+            <td></td>
+        </tr>
+        <tr class="success hidden" data-catalogid="1">
+            <td>1</td>
+            <td>Otto, версия: "V1"</td>
+            <td></td>
+            <td>
+                <button type="button" class="btn btn-sm">Удаление</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Просмотр</button>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Otto</td>
+            <td>
+                Не опубликовано
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Удаление</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Просмотр</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm">Публикация</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

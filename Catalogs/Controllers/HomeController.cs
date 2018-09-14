@@ -17,13 +17,16 @@ namespace Catalogs.Controllers
 
         public ViewResult Add()
         {
-            ViewBag.Title = "Add catalog";
             return View();
         }
 
         public ViewResult Catalog()
         {
-            ViewBag.Title = "Catalog";
+            return View();
+        }
+
+        public ViewResult Catalogs()
+        {
             return View();
         }
     }
