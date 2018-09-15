@@ -1,7 +1,7 @@
 ﻿<br/>
 
 <div class="j-main-container">
-    @Html.Action("Catalogs")
+    @Html.Action("All", "Catalog")
 </div>
 
 @section scripts{
@@ -11,13 +11,13 @@
 
             $('.j-catalog-list').click(function (e) {
                 e.preventDefault();
-                $.ajax('@Url.Action("Catalogs")').done(function(resp) {
+                $.ajax('@Url.Action("All", "Catalog")').done(function(resp) {
                     $container.html(resp);
                 });
             });
 
             $container.on('click', '.j-add-catalog', function() {
-                $.ajax('@Url.Action("Add")').done(function(resp) {
+                $.ajax('@Url.Action("Add", "Catalog")').done(function(resp) {
                     $container.html(resp);
                 });
             });

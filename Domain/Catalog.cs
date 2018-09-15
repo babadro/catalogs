@@ -8,10 +8,10 @@ namespace Domain
 {
     public class Catalog
     {
-        public Catalog(int id, string name)
+        public Catalog(int id, string catalog_name)
         {
             Id = id;
-            Name = name;
+            Name = catalog_name;
         }
 
         public int Id { get; set; }
