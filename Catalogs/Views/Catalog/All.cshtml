@@ -23,12 +23,12 @@
     <tbody>
         @foreach (var group in Model)
         {
-            var firstInfo = group.First();
+            var catalogName = group.First().CatalogName;
             var catalogId = group.Key;
             var versions = group.Where(g => g.VersionId != 0);
             <tr>
                 <td>@catalogId</td>
-                <td>@firstInfo.CatalogName</td>
+                <td>@catalogName</td>
                 <td>
                     <button type="button" class="btn btn-sm" data-catalogid="@catalogId">@(versions.Any() ? "Версии" : "Не опубликовано")</button>
                 </td>
@@ -46,7 +46,7 @@
             {
                 <tr class="success hidden" data-catalogid="@catalogId">
                     <td>@version.VersionId</td>
-                    <td>@firstInfo.CatalogName, версия: @version.VersionName</td>
+                    <td>@catalogName, версия: @version.VersionName</td>
                     <td></td>
                     <td>
                         <button type="button" class="btn btn-sm">Удаление</button>
