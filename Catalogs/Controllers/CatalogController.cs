@@ -17,12 +17,62 @@ namespace Catalogs.Controllers
         public ActionResult All()
         {
             List<Catalog> catalogList = new List<Catalog>();
+            List<Version> versionList = new List<Version>();
+            List<CatalogVersionInfo> catalogsAndVersions;
             using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["TestConnectionString"].ConnectionString))
             {
 
                 catalogList = db.Query<Catalog>("Select * From catalogs").ToList();
+                versionList = db.Query<Version>("Select * from versions").ToList();
+                catalogsAndVersions = db.Query<CatalogVersionInfo>(
+                    @"
+                        SELECT cat.catalog_name, cat.ID AS catalogId, ver.version_name, ver.ID AS versionId FROM
+                        (SELECT * FROM catalogs) cat
+                        LEFT JOIN
+                        (SELECT * FROM versions) ver
+                        ON
+                        cat.ID = ver.catalog_id
+                    "
+                ).ToList();
             }
-            return View();
+
+            var catalogs = catalogsAndVersions.GroupBy(info => info.CatalogId);//.Select(g => g.First()).Select(cv => new Catalog(cv.CatalogId, cv.CatalogName));
+            //var temp = catalogsAndVersions
+            //List<Catalog> catalogs = catalogsAndVersions
+
+
+            
+            //List<Version> versionList = new List<Version>();
+
+            var model = new List<(Catalog, List<CatalogVersion>)>
+            {
+                (new Catalog(1, "First Catalog"), new List<CatalogVersion>
+                {
+                    new CatalogVersion(1, "Ver 1"),
+                    new CatalogVersion(2, "Ver 2"),
+                    new CatalogVersion(3, "Ver 3")
+                }),
+                (new Catalog(2, "Second Catalog"), new List<CatalogVersion>
+                {
+                    new CatalogVersion(4, "Ver 1"),
+                    new CatalogVersion(5, "Ver 2"),
+                    new CatalogVersion(6, "Ver 3")
+                }),
+                (new Catalog(3, "Third Catalog"), new List<CatalogVersion>
+                {
+                    new CatalogVersion(7, "Ver 1"),
+                    new CatalogVersion(8, "Ver 2"),
+                    new CatalogVersion(9, "Ver 3")
+                }),
+                (new Catalog(4, "Mama mia catalog"), new List<CatalogVersion>
+                {
+                    new CatalogVersion(10, "Ver 1"),
+                    new CatalogVersion(11, "Ver 2"),
+                    new CatalogVersion(12, "Ver 3")
+                })
+            };
+
+            return View(model);
         }
 
         // GET: Catalog/Single/5

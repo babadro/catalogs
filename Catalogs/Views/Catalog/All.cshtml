@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Domain
+
+@model List<(Catalog, List<CatalogVersion>)>
+
+@{
     Layout = null;
 }
 
@@ -17,73 +21,41 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Otto</td>
-            <td>
-                <button type="button" class="btn btn-sm" data-catalogid="1">Версии</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Просмотр</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Публикация</button>
-            </td>
-        </tr>
-        <tr class="success hidden" data-catalogid="1">
-            <td>1</td>
-            <td>Otto, версия: "V1"</td>
-            <td></td>
-            <td>
-                <button type="button" class="btn btn-sm">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Просмотр</button>
-            </td>
-            <td></td>
-        </tr>
-        <tr class="success hidden" data-catalogid="1">
-            <td>1</td>
-            <td>Otto, версия: "V1"</td>
-            <td></td>
-            <td>
-                <button type="button" class="btn btn-sm">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Просмотр</button>
-            </td>
-            <td></td>
-        </tr>
-        <tr class="success hidden" data-catalogid="1">
-            <td>1</td>
-            <td>Otto, версия: "V1"</td>
-            <td></td>
-            <td>
-                <button type="button" class="btn btn-sm">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Просмотр</button>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Otto</td>
-            <td>
-                Не опубликовано
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Удаление</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Просмотр</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm">Публикация</button>
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            var catalog = item.Item1;
+            var versions = item.Item2;
+            <tr>
+                <td>@catalog.Id</td>
+                <td>@catalog.Name</td>
+                <td>
+                    <button type="button" class="btn btn-sm" data-catalogid="@catalog.Id">@(versions.Any() ? "Версии" : "Не опубликовано")</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm">Удаление</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm">Просмотр</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm">Публикация</button>
+                </td>
+            </tr>
+            foreach (var version in versions)
+            {
+                <tr class="success hidden" data-catalogid="@catalog.Id">
+                    <td>@version.Id</td>
+                    <td>@catalog.Name, версия: @version.Name</td>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-sm">Удаление</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm">Просмотр</button>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

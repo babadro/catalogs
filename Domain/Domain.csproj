@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Catalog.cs" />
     <Compile Include="CatalogVersion.cs" />
+    <Compile Include="CatalogVersionInfo.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="FieldValue.cs" />

@@ -18,7 +18,7 @@ namespace Catalogs
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            //Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
     }
 }
