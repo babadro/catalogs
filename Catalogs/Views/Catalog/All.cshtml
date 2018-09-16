@@ -1,6 +1,6 @@
 ﻿@using Domain
 
-@model List<(Catalog, List<CatalogVersion>)>
+@model IEnumerable<IGrouping<int, CatalogVersionInfo>>
 
 @{
     Layout = null;
@@ -21,15 +21,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var group in Model)
         {
-            var catalog = item.Item1;
-            var versions = item.Item2;
+            var firstInfo = group.First();
+            var catalogId = group.Key;
+            var versions = group.Where(g => g.VersionId != 0);
             <tr>
-                <td>@catalog.Id</td>
-                <td>@catalog.Name</td>
+                <td>@catalogId</td>
+                <td>@firstInfo.CatalogName</td>
                 <td>
-                    <button type="button" class="btn btn-sm" data-catalogid="@catalog.Id">@(versions.Any() ? "Версии" : "Не опубликовано")</button>
+                    <button type="button" class="btn btn-sm" data-catalogid="@catalogId">@(versions.Any() ? "Версии" : "Не опубликовано")</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-sm">Удаление</button>
@@ -43,9 +44,9 @@
             </tr>
             foreach (var version in versions)
             {
-                <tr class="success hidden" data-catalogid="@catalog.Id">
-                    <td>@version.Id</td>
-                    <td>@catalog.Name, версия: @version.Name</td>
+                <tr class="success hidden" data-catalogid="@catalogId">
+                    <td>@version.VersionId</td>
+                    <td>@firstInfo.CatalogName, версия: @version.VersionName</td>
                     <td></td>
                     <td>
                         <button type="button" class="btn btn-sm">Удаление</button>
