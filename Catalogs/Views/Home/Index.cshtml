@@ -6,23 +6,27 @@
 
 @section scripts{
     <script>
-        (function ($) {
+        (function($) {
             var fieldSl = '.j-field', $container = $('.j-main-container');
 
-            $('.j-catalog-list').click(function (e) {
+            $('.j-catalog-list').click(function(e) {
                 e.preventDefault();
                 $.ajax('@Url.Action("All", "Catalog")').done(function(resp) {
                     $container.html(resp);
                 });
             });
 
-            $container.on('click', '.j-add-catalog', function() {
-                $.ajax('@Url.Action("Add", "Catalog")').done(function(resp) {
-                    $container.html(resp);
+            $container.on('click',
+                '.j-add-catalog',
+                function() {
+                    $.ajax('@Url.Action("Add", "Catalog")').done(function(resp) {
+                        $container.html(resp);
+                    });
                 });
-            });
 
-            $container.on('click', 'button[data-catalogid]', function() {
+            $container.on('click',
+                'button[data-catalogid]',
+                function() {
                     var $this = $(this),
                         catalogId = $this.data('catalogid');
                     var selector = '[data-catalogid="' + catalogId + '"]';
@@ -30,17 +34,42 @@
                 }
             );
 
-            $container.on('click', '.j-add-field', function () {
-                var $last = lastField();
-                $last.clone().insertAfter($last);
-                lastField().find('input').val('');
-            });
+            $container.on('click',
+                '.j-add-field',
+                function() {
+                    var $last = lastField();
+                    $last.clone().insertAfter($last);
+                    lastField().find('input').val('');
+                });
 
             $container.on('click',
                 '.j-remove-field',
                 function() {
                     if ($(fieldSl).length > 1)
                         $(this).closest('tr').remove();
+                });
+
+            $container.on('submit',
+                '#add-catalog',
+                function(e) {
+                    e.preventDefault();
+                    console.log('submit add!');
+                    var $form = $(this);
+                    var data = $form.serialize();
+                    console.log(data);
+                    data = {
+                        Name: "New cat name",
+                        Fields: [
+                            { Id: 1, Name: "field name 1", FieldType: "1" }
+                        ]
+                    };
+                    //$.post("/Catalog/Create", data);
+                    $.ajax({
+                        url: "/Catalog/Create",
+                        contentType: 'application/json',
+                        data: JSON.stringify(data),
+                        type: 'POST'
+                    });
                 });
 
             function lastField() { return $(fieldSl).last(); };

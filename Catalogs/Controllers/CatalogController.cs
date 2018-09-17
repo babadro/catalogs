@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using Catalogs.Models;
 using Dapper;
 using Domain;
 
@@ -48,18 +49,19 @@ namespace Catalogs.Controllers
 
         // POST: Catalog/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(NewCatalogInput input)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            //try
+            //{
+            //    // TODO: Add insert logic here
+            //
+            //    return RedirectToAction("All");
+            //}
+            //catch
+            //{
+            //    return View("Add");
+            //}
+            return View("Add");
         }
 
         // GET: Catalog/Edit/5
