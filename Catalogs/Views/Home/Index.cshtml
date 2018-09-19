@@ -63,6 +63,7 @@
                             { Id: 1, Name: "field name 1", FieldType: "10" }
                         ]
                     };
+                    var data2 = $form.serializeJSON();
                     //$.post("/Catalog/Create", data);
                     $.ajax({
                         url: "/Catalog/Create",
