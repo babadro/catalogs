@@ -38,7 +38,14 @@
                 '.j-add-field',
                 function() {
                     var $last = lastField();
-                    $last.clone().insertAfter($last);
+                    var $clonedField = $last.clone();
+                    var $namedEls = $clonedField.find('*[name]');
+                    $namedEls.each(function() {
+                        var $this = $(this);
+                        var result = this.attr('name').replace("/[d+]", "[1]");
+                        var temp = 1;
+                    });
+                    $clonedField.insertAfter($last);
                     lastField().find('input').val('');
                 });
 
@@ -53,22 +60,11 @@
                 '#add-catalog',
                 function(e) {
                     e.preventDefault();
-                    console.log('submit add!');
                     var $form = $(this);
                     var data = $form.serialize();
-                    console.log(data);
-                    data = {
-                        Name: "New cat name",
-                        Fields: [
-                            { Id: 1, Name: "field name 1", FieldType: "10" }
-                        ]
-                    };
-                    var data2 = $form.serializeJSON();
-                    //$.post("/Catalog/Create", data);
                     $.ajax({
                         url: "/Catalog/Create",
-                        contentType: 'application/json',
-                        data: JSON.stringify(data),
+                        data: data,
                         type: 'POST'
                     });
                 });
