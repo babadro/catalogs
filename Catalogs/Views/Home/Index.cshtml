@@ -1,76 +1,13 @@
 ﻿<br/>
 
-<div class="j-main-container">
-    @Html.Action("All", "Catalog")
+<div class="#container">
 </div>
 
 @section scripts{
-    <script>
-        (function($) {
-            var fieldSl = '.j-field', $container = $('.j-main-container');
+    <script type="text/ja">
+       var a = 1;
 
-            $('.j-catalog-list').click(function(e) {
-                e.preventDefault();
-                $.ajax('@Url.Action("All", "Catalog")').done(function(resp) {
-                    $container.html(resp);
-                });
-            });
 
-            $container.on('click',
-                '.j-add-catalog',
-                function() {
-                    $.ajax('@Url.Action("Add", "Catalog")').done(function(resp) {
-                        $container.html(resp);
-                    });
-                });
-
-            $container.on('click',
-                'button[data-catalogid]',
-                function() {
-                    var $this = $(this),
-                        catalogId = $this.data('catalogid');
-                    var selector = '[data-catalogid="' + catalogId + '"]';
-                    $('tr' + selector).toggleClass('hidden');
-                }
-            );
-
-            $container.on('click',
-                '.j-add-field',
-                function() {
-                    var $last = lastField();
-                    var $clonedField = $last.clone();
-                    var $namedEls = $clonedField.find('*[name]');
-                    $namedEls.each(function() {
-                        var $this = $(this);
-                        var result = this.attr('name').replace("/[d+]", "[1]");
-                        var temp = 1;
-                    });
-                    $clonedField.insertAfter($last);
-                    lastField().find('input').val('');
-                });
-
-            $container.on('click',
-                '.j-remove-field',
-                function() {
-                    if ($(fieldSl).length > 1)
-                        $(this).closest('tr').remove();
-                });
-
-            $container.on('submit',
-                '#add-catalog',
-                function(e) {
-                    e.preventDefault();
-                    var $form = $(this);
-                    var data = $form.serialize();
-                    $.ajax({
-                        url: "/Catalog/Create",
-                        data: data,
-                        type: 'POST'
-                    });
-                });
-
-            function lastField() { return $(fieldSl).last(); };
-        })(jQuery);
     </script>
 }
 

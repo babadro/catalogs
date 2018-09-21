@@ -14,20 +14,5 @@ namespace Catalogs.Controllers
 
             return View();
         }
-
-        public ViewResult Add()
-        {
-            return View();
-        }
-
-        public ViewResult Catalog()
-        {
-            return View();
-        }
-
-        public ViewResult Catalogs()
-        {
-            return View();
-        }
     }
 }

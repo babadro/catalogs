@@ -238,6 +238,9 @@
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.serializejson.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\react-dom.js" />
+    <Content Include="Scripts\react.js" />
+    <Content Include="Scripts\ReactRouter.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
