@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Catalogs2
 {
@@ -27,6 +29,9 @@ namespace Catalogs2
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddTransient<IDbConnection>((sp) => new SqlConnection(this.Configuration.GetConnectionString("CatalogsConnStr"))
+        );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
