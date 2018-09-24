@@ -67,6 +67,7 @@ namespace Catalogs2
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
     }
 }
