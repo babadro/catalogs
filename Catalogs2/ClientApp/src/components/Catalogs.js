@@ -6,12 +6,19 @@ export class Catalogs extends Component {
     constructor(props) {
         super(props);
         this.state = { catalogs: [], loading: false };
+        this.versionBtn = this.versionBtn.bind(this);
 
         fetch('api/SampleData/catalogs')
             .then(response => response.json())
             .then(data => {
-                this.setState({ catalogs: data, loading: false });
+                this.setState({ catalogs: data, loading: false, showVersion: {} });
             });
+        
+    }
+
+    versionBtn(id) {
+        var visibility = this.state.showVersion[id];
+        this.setState({ showVersion: !visibility });
     }
 
     static renderCatalogsTable(catalogs) {
@@ -26,7 +33,7 @@ export class Catalogs extends Component {
                     <td>{catalogId}</td>
                     <td>{catalogName}</td>
                     <td>
-                        <button type="button" className="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
+                        <button onClick={() => this.versionBtn(catalogId)} type="button" className="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
                     </td>
                     <td>
                         <button type="button" className="btn btn-sm">Удаление</button>
@@ -39,7 +46,10 @@ export class Catalogs extends Component {
                     </td>
                 </tr>
             );
+            
             for (let version of versions) {
+                if (!version.show)
+                    continue;
                 rows.push(
                     <tr className="success" key={version.versionId}>
                         <td>{version.versionId}</td>
