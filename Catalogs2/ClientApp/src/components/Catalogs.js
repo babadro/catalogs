@@ -20,22 +20,22 @@ export class Catalogs extends Component {
             var firstItem = group[0];
             var catalogName = firstItem.catalogName;
             var catalogId = firstItem.catalogId;
-            var versions = group.filter(g => { g.verionId != 0 });
+            var versions = group.filter(g => { return g.verionId != 0 });
             rows.push(
                 <tr key={catalogId}>
                     <td>{catalogId}</td>
                     <td>{catalogName}</td>
                     <td>
-                        <button type="button" class="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
+                        <button type="button" className="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm">Удаление</button>
+                        <button type="button" className="btn btn-sm">Удаление</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm">Просмотр</button>
+                        <button type="button" className="btn btn-sm">Просмотр</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm">Публикация</button>
+                        <button type="button" className="btn btn-sm">Публикация</button>
                     </td>
                 </tr>
             );
