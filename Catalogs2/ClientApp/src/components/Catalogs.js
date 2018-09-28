@@ -14,59 +14,49 @@ export class Catalogs extends Component {
             });
     }
 
-    static renderVersionsTrs(versions, catalogName) {
-        return (<div>
-            {
-                versions.map(version =>
-                    <tr class="success" key={version.versionId}>
+    static renderCatalogsTable(catalogs) {
+        let rows = [];
+        for (let group of catalogs) {
+            var firstItem = group[0];
+            var catalogName = firstItem.catalogName;
+            var catalogId = firstItem.catalogId;
+            var versions = group.filter(g => { g.verionId != 0 });
+            rows.push(
+                <tr key={catalogId}>
+                    <td>{catalogId}</td>
+                    <td>{catalogName}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm">Удаление</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm">Просмотр</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm">Публикация</button>
+                    </td>
+                </tr>
+            );
+            for (let version of versions) {
+                rows.push(
+                    <tr className="success" key={version.versionId}>
                         <td>{version.versionId}</td>
                         <td>{catalogName}, версия: {version.versionName}</td>
                         <td></td>
                         <td>
-                            <button type="button" class="btn btn-sm">Удаление</button>
+                            <button type="button" className="btn btn-sm">Удаление</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-sm">Просмотр</button>
+                            <button type="button" className="btn btn-sm">Просмотр</button>
                         </td>
                         <td></td>
                     </tr>
-                )
-            }</div>
-        );
-    }
-
-    static renderCatalogsTable(catalogs) {
-        let table = []
-        for (let i = 0; i < catalogs.length; i++) {
-            
+                );
+            }
         }
-        return (                
-                    {catalogs.map(function (group) {
-                        var catalogName = group[0].catalogName;
-                        var catalogId = group[0].catalogId;
-                        var versions = group.filter(g => { g.versionId != 0 });
-                        var temp = 1;
-                        return (
-                            <tr key={catalogId}>
-                                <td>{catalogId}</td>
-                                <td>{catalogName}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm">Удаление</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm">Просмотр</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm">Публикация</button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                
-        );
+        return (<tbody>{rows}</tbody>);
     }
 
     render() {
@@ -90,9 +80,7 @@ export class Catalogs extends Component {
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {contents}
-                    </tbody>
+                    {contents}
                 </table>
             </div>
         );
