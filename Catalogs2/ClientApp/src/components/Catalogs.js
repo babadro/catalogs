@@ -11,25 +11,27 @@ export class Catalogs extends Component {
         fetch('api/SampleData/catalogs')
             .then(response => response.json())
             .then(data => {
-                this.setState({ catalogs: data, loading: false, showVersion: {} });
+                this.setState({ catalogs: data, loading: false, showVersion: {}});
             });
-        
+
+        this.versionBtn = this.versionBtn.bind(this);
     }
 
     versionBtn(id) {
-        var visibility = this.state.showVersion[id];
-        this.setState({ showVersion: !visibility });
+        var showVersion = this.state.showVersion;
+        showVersion[id] = !showVersion[id];//var visibility = this.state.showVersion[id];
+        this.setState({ showVersion: showVersion });
     }
 
-    static renderCatalogsTable(catalogs) {
+    renderCatalogsTable(catalogs) {
         let rows = [];
         for (let group of catalogs) {
-            var firstItem = group[0];
-            var catalogName = firstItem.catalogName;
-            var catalogId = firstItem.catalogId;
-            var versions = group.filter(g => { return g.verionId != 0 });
+            let firstItem = group[0];
+            let catalogName = firstItem.catalogName;
+            let catalogId = firstItem.catalogId;
+            let versions = group.filter(g => { return g.versionId !== 0 });
             rows.push(
-                <tr key={catalogId}>
+                <tr key={"cat" + catalogId}>
                     <td>{catalogId}</td>
                     <td>{catalogName}</td>
                     <td>
@@ -48,10 +50,10 @@ export class Catalogs extends Component {
             );
             
             for (let version of versions) {
-                if (!version.show)
+                if (!this.state.showVersion[version.catalogId])
                     continue;
                 rows.push(
-                    <tr className="success" key={version.versionId}>
+                    <tr className="success" key={"ver" + version.versionId}>
                         <td>{version.versionId}</td>
                         <td>{catalogName}, версия: {version.versionName}</td>
                         <td></td>
@@ -72,7 +74,7 @@ export class Catalogs extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : Catalogs.renderCatalogsTable(this.state.catalogs);
+            : this.renderCatalogsTable(this.state.catalogs);
 
         return (
             <div>
