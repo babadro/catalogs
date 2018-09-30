@@ -90,5 +90,25 @@ namespace Catalogs2.Controllers
 
             return catalogsAndVersions;
         }
+
+        [HttpGet("[action]")]
+        public ActionResult CreateCatalog(string name)
+        {
+            using (IDbConnection db = _dbConnection)
+            {
+                var catalogsAndVersions = db.Query<CatalogVersionInfo>(
+                    @"
+                        SELECT cat.catalog_name, cat.ID AS catalogId, ver.version_name, ver.ID AS versionId FROM
+                        (SELECT * FROM catalogs) cat
+                        LEFT JOIN
+                        (SELECT * FROM versions) ver
+                        ON
+                        cat.ID = ver.catalog_id
+                    "
+                ).GroupBy(info => info.CatalogId);
+            }
+
+            return null;
+        }
     }
 }
