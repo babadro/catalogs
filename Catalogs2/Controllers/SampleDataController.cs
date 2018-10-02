@@ -91,9 +91,11 @@ namespace Catalogs2.Controllers
             return catalogsAndVersions;
         }
 
-        [HttpGet("[action]")]
-        public ActionResult CreateCatalog(string name)
+        [HttpPost("[action]")]
+        public ActionResult CreateCatalog([FromBody] string catalog_name)
         {
+            if (catalog_name == "" || string.IsNullOrWhiteSpace(catalog_name))
+                return new BadRequestResult();
             using (IDbConnection db = _dbConnection)
             {
                 var catalogsAndVersions = db.Query<CatalogVersionInfo>(
@@ -108,7 +110,7 @@ namespace Catalogs2.Controllers
                 ).GroupBy(info => info.CatalogId);
             }
 
-            return null;
+            return Ok();
         }
     }
 }

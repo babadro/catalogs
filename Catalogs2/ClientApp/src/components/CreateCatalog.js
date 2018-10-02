@@ -5,31 +5,43 @@ export class CreateCatalog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { value: '' };
 
-        //fetch('api/SampleData/catalogs')
-        //    .then(response => response.json())
-        //    .then(data => {
-        //        this.setState({ catalogs: data, loading: false, showVersion: {}});
-        //    });
-
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //versionBtn(id) {
-    //    var showVersion = this.state.showVersion;
-    //    showVersion[id] = !showVersion[id];//var visibility = this.state.showVersion[id];
-    //    this.setState({ showVersion: showVersion });
-    //}
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
 
-    
+    handleSubmit(event, name) {
+        event.preventDefault();
+        let data = new FormData();
+        data.append("json", JSON.stringify({ id: 0, catalog_name: name }));
+
+        fetch("api/SampleData/CreateCatalog",
+                {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: 0, catalog_name: name })
+                })
+            .then(function (res) { alert(JSON.stringify(res)); });
+    }
 
     render() {
         return (
-            <div>
+            <form onSubmit={(event) => this.handleSubmit(event, this.state.value)}>
                 <h1>Создание нового каталога</h1>
-                <input type="text" placeholder="Введите название"></input>
-                <input type="submit"></input>
-            </div>
+                <label>
+                    Введите название:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit"/>
+            </form>
         );
     }
 }
