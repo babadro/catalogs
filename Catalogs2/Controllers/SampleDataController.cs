@@ -92,22 +92,22 @@ namespace Catalogs2.Controllers
         }
 
         [HttpPost("[action]")]
-        public ActionResult CreateCatalog([FromBody] string catalog_name)
+        public ActionResult CreateCatalog([FromBody] Catalog catalog)
         {
-            if (catalog_name == "" || string.IsNullOrWhiteSpace(catalog_name))
+            if (catalog.Name == "" || string.IsNullOrWhiteSpace(catalog.Name))
                 return new BadRequestResult();
             using (IDbConnection db = _dbConnection)
             {
-                var catalogsAndVersions = db.Query<CatalogVersionInfo>(
-                    @"
-                        SELECT cat.catalog_name, cat.ID AS catalogId, ver.version_name, ver.ID AS versionId FROM
-                        (SELECT * FROM catalogs) cat
-                        LEFT JOIN
-                        (SELECT * FROM versions) ver
-                        ON
-                        cat.ID = ver.catalog_id
-                    "
-                ).GroupBy(info => info.CatalogId);
+                try
+                {
+                    var res = db.Query("[dbo][Create_Catalog]", new {catalog_name = catalog.Name},
+                        commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    return new StatusCodeResult(2);
+                }
+                
             }
 
             return Ok();

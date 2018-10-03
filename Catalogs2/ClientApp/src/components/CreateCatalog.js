@@ -17,8 +17,8 @@ export class CreateCatalog extends Component {
 
     handleSubmit(event, name) {
         event.preventDefault();
-        let data = new FormData();
-        data.append("json", JSON.stringify({ id: 0, catalog_name: name }));
+        //let data = new FormData();
+        //data.append("json", JSON.stringify({catalog_name: name }));
 
         fetch("api/SampleData/CreateCatalog",
                 {
@@ -27,9 +27,12 @@ export class CreateCatalog extends Component {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ id: 0, catalog_name: name })
+                    body: JSON.stringify({name: name })
                 })
-            .then(function (res) { alert(JSON.stringify(res)); });
+            .then(function(res) {
+                if (!res.ok)
+                    alert(JSON.stringify(res.statusText));
+            });
     }
 
     render() {
