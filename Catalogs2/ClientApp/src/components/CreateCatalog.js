@@ -20,7 +20,7 @@ export class CreateCatalog extends Component {
         //let data = new FormData();
         //data.append("json", JSON.stringify({catalog_name: name }));
 
-        fetch("api/SampleData/CreateCatalog",
+        fetch("api/Catalog",
                 {
                     method: "POST",
                     headers: {

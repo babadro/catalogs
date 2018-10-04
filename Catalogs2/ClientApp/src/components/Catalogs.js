@@ -23,6 +23,13 @@ export class Catalogs extends Component {
         this.setState({ showVersion: showVersion });
     }
 
+    deleteCatalog(id) {
+        //fetch("api/SampleData/DeleteCatalog",
+        //    {
+        //        method: "POST"
+        //    })
+    }
+
     renderCatalogsTable(catalogs) {
         let rows = [];
         for (let group of catalogs) {
@@ -38,7 +45,7 @@ export class Catalogs extends Component {
                         <button onClick={() => this.versionBtn(catalogId)} type="button" className="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
                     </td>
                     <td>
-                        <button type="button" className="btn btn-sm">Удаление</button>
+                        <button onClick={() => this.deleteCatalog(catalogId)} type="button" className="btn btn-sm">Удаление</button>
                     </td>
                     <td>
                         <button type="button" className="btn btn-sm">Просмотр</button>
