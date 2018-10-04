@@ -19,7 +19,7 @@ export class Catalogs extends Component {
 
     versionBtn(id) {
         var showVersion = this.state.showVersion;
-        showVersion[id] = !showVersion[id];//var visibility = this.state.showVersion[id];
+        showVersion[id] = !showVersion[id];
         this.setState({ showVersion: showVersion });
     }
 
@@ -78,9 +78,7 @@ export class Catalogs extends Component {
 
         return (
             <div>
-                <button type="button" className="btn btn-sm">Добавить справочник</button>
-                <br />
-                <br />
+                <h1>Catalog list</h1>
                 <table className="table table-hover">
                     <thead>
                         <tr>

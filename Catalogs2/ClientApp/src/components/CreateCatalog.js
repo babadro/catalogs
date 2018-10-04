@@ -29,9 +29,12 @@ export class CreateCatalog extends Component {
                     },
                     body: JSON.stringify({name: name })
                 })
-            .then(function(res) {
-                if (!res.ok)
-                    alert(JSON.stringify(res.statusText));
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.errMsg)
+                    alert(data.errMsg);
+                else
+                    this.props.history.push('/catalogs');
             });
     }
 

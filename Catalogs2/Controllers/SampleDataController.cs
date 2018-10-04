@@ -92,25 +92,25 @@ namespace Catalogs2.Controllers
         }
 
         [HttpPost("[action]")]
-        public ActionResult CreateCatalog([FromBody] Catalog catalog)
+        public JsonResult CreateCatalog([FromBody] Catalog catalog)
         {
             if (catalog.Name == "" || string.IsNullOrWhiteSpace(catalog.Name))
-                return new BadRequestResult();
+                return Json(new {errMsg = "Invalid catalog name"});
             using (IDbConnection db = _dbConnection)
             {
                 try
                 {
-                    var res = db.Query("[dbo][Create_Catalog]", new {catalog_name = catalog.Name},
+                    var res = db.Query("[dbo].[Create_Catalog]", new {catalog_name = catalog.Name},
                         commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
                 {
-                    return new StatusCodeResult(2);
+                    return Json(new {errMsg = ex.Message});
                 }
                 
             }
 
-            return Ok();
+            return Json(null);
         }
     }
 }
