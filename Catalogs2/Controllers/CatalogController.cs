@@ -36,15 +36,15 @@ namespace Catalogs2.Controllers
 
         // POST: api/Catalog
         [HttpPost]
-        public IActionResult Create(Catalog catalog)
+        public IActionResult Create([FromBody] string name)
         {
-            if (catalog.Name == "" || string.IsNullOrWhiteSpace(catalog.Name))
+            if (name == "" || string.IsNullOrWhiteSpace(name))
                 return new JsonResult(new { errMsg = "Invalid catalog name" });
             using (IDbConnection db = _dbConnection)
             {
                 try
                 {
-                    var res = db.Query("[dbo].[Create_Catalog]", new { catalog_name = catalog.Name },
+                    var res = db.Query("[dbo].[Create_Catalog]", new { catalog_name = name },
                         commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)

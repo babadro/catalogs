@@ -21,13 +21,12 @@ export class CreateCatalog extends Component {
         //data.append("json", JSON.stringify({catalog_name: name }));
 
         fetch("api/Catalog",
-                {
-                    method: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({name: name })
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify("newName") 
                 })
             .then(response => response.json())
             .then(data => {
