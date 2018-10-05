@@ -5,10 +5,28 @@ export class CreateCatalog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = { value: ''};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    renderFieldRow() {
+        return (
+            <tr>
+                <td><input type="text" className="form-control" placeholder="Название поля" /></td>
+                <td>
+                    <select className="form-control">
+                        <option value="" disabled="" selected="">Выберите тип</option>
+                        <option value="str">str</option>
+                        <option value="boolean">boolean</option>
+                        <option value="integer">integer</option>
+                        <option value="date">date</option>
+                    </select>
+                </td>
+                <td><button type="button" className="btn btn-danger">Remove</button></td>
+            </tr>
+        );
     }
 
     handleChange(event) {
@@ -45,7 +63,17 @@ export class CreateCatalog extends Component {
                     Введите название:
                     <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Submit"/>
+                <input type="submit" value="Submit" />
+                <table className="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Название поля</th>
+                        <th>Тип поля</th>
+                        <th><button type="button" className="btn btn-info">Добавить поле</button></th>
+                    </tr>
+                    </thead>
+                    <tbody>{this.renderFieldRow()}</tbody>
+                </table>
             </form>
         );
     }
