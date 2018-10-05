@@ -44,7 +44,7 @@ namespace Catalogs2.Controllers
             {
                 try
                 {
-                    var res = db.Query("[dbo].[Create_Catalog]", new { catalog_name = name },
+                    db.Query("[dbo].[Create_Catalog]", new { catalog_name = name },
                         commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)

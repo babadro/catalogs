@@ -26,7 +26,7 @@ export class CreateCatalog extends Component {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify("newName") 
+                body: JSON.stringify(name) 
                 })
             .then(response => response.json())
             .then(data => {
