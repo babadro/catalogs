@@ -24,10 +24,17 @@ export class Catalogs extends Component {
     }
 
     deleteCatalog(id) {
-        //fetch("api/SampleData/DeleteCatalog",
-        //    {
-        //        method: "POST"
-        //    })
+        fetch("api/Catalog/" + id,
+            { method: "DELETE" })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.errMsg)
+                    alert(data.errMsg);
+                else {
+                    let updatedCatalogs = this.state.catalogs.filter(group => group[0].catalogId !== id);
+                    this.setState({ catalogs: updatedCatalogs });
+                };
+            });
     }
 
     renderCatalogsTable(catalogs) {

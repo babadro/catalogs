@@ -63,10 +63,26 @@ namespace Catalogs2.Controllers
         {
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/Catalog/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public JsonResult Delete(int id)
         {
+            if (id <= 0)
+                return new JsonResult(new {errMsg = "Invalid catalog id"});
+
+            using (IDbConnection db = _dbConnection)
+            {
+                try
+                {
+                    db.Query($"DELETE FROM catalogs WHERE ID = {id}");
+                }
+                catch (Exception ex)
+                {
+                    return new JsonResult(new { errMsg = ex.Message });
+                }
+
+            }
+            return new JsonResult(null);
         }
     }
 }
