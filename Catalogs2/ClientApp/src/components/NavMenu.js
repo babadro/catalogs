@@ -35,7 +35,7 @@ export class NavMenu extends Component {
             </LinkContainer>
             <LinkContainer to={'/createcat'}>
               <NavItem>
-                <Glyphicon glyph='th-list' /> Fetch data
+                <Glyphicon glyph='th-list' /> Create new catalog
               </NavItem>
             </LinkContainer>
             <LinkContainer to={'/catalogs'}>

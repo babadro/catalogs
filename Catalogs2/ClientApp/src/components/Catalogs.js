@@ -19,8 +19,22 @@ export class Catalogs extends Component {
 
     versionBtn(id) {
         var showVersion = this.state.showVersion;
-        showVersion[id] = !showVersion[id];//var visibility = this.state.showVersion[id];
+        showVersion[id] = !showVersion[id];
         this.setState({ showVersion: showVersion });
+    }
+
+    deleteCatalog(id) {
+        fetch("api/Catalog/" + id,
+            { method: "DELETE" })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.errMsg)
+                    alert(data.errMsg);
+                else {
+                    let updatedCatalogs = this.state.catalogs.filter(group => group[0].catalogId !== id);
+                    this.setState({ catalogs: updatedCatalogs });
+                };
+            });
     }
 
     renderCatalogsTable(catalogs) {
@@ -38,7 +52,7 @@ export class Catalogs extends Component {
                         <button onClick={() => this.versionBtn(catalogId)} type="button" className="btn btn-sm" data-catalogid="{catalogId}">{versions.length > 0 ? "Версии" : "Не опубликовано"}</button>
                     </td>
                     <td>
-                        <button type="button" className="btn btn-sm">Удаление</button>
+                        <button onClick={() => this.deleteCatalog(catalogId)} type="button" className="btn btn-sm">Удаление</button>
                     </td>
                     <td>
                         <button type="button" className="btn btn-sm">Просмотр</button>
@@ -78,9 +92,7 @@ export class Catalogs extends Component {
 
         return (
             <div>
-                <button type="button" className="btn btn-sm">Добавить справочник</button>
-                <br />
-                <br />
+                <h1>Catalog list</h1>
                 <table className="table table-hover">
                     <thead>
                         <tr>

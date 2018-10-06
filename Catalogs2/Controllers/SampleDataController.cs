@@ -91,15 +91,26 @@ namespace Catalogs2.Controllers
             return catalogsAndVersions;
         }
 
-        [HttpGet("[action]")]
-        public ActionResult CreateCatalog(string name)
+        [HttpPost("[action]")]
+        public JsonResult CreateCatalog([FromBody] Catalog catalog)
         {
+            if (catalog.Name == "" || string.IsNullOrWhiteSpace(catalog.Name))
+                return Json(new {errMsg = "Invalid catalog name"});
             using (IDbConnection db = _dbConnection)
             {
-                db.Query("[dbo].[Create_Catalog]", new { catalog_name = name }, commandType: CommandType.StoredProcedure).GroupBy(info => info.CatalogId);
+                try
+                {
+                    var res = db.Query("[dbo].[Create_Catalog]", new {catalog_name = catalog.Name},
+                        commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new {errMsg = ex.Message});
+                }
+                
             }
 
-            return new JsonResult(true);
+            return Json(null);
         }
     }
 }

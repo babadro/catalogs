@@ -4,6 +4,7 @@ namespace DomainCore
 {
     public class Catalog
     {
+        public Catalog() { }
         public Catalog(int id, string catalog_name)
         {
             Id = id;

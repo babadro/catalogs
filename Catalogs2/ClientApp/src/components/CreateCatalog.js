@@ -5,31 +5,76 @@ export class CreateCatalog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { value: ''};
 
-        //fetch('api/SampleData/catalogs')
-        //    .then(response => response.json())
-        //    .then(data => {
-        //        this.setState({ catalogs: data, loading: false, showVersion: {}});
-        //    });
-
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //versionBtn(id) {
-    //    var showVersion = this.state.showVersion;
-    //    showVersion[id] = !showVersion[id];//var visibility = this.state.showVersion[id];
-    //    this.setState({ showVersion: showVersion });
-    //}
+    renderFieldRow() {
+        return (
+            <tr>
+                <td><input type="text" className="form-control" placeholder="Название поля" /></td>
+                <td>
+                    <select className="form-control">
+                        <option value="" disabled="" selected="">Выберите тип</option>
+                        <option value="str">str</option>
+                        <option value="boolean">boolean</option>
+                        <option value="integer">integer</option>
+                        <option value="date">date</option>
+                    </select>
+                </td>
+                <td><button type="button" className="btn btn-danger">Remove</button></td>
+            </tr>
+        );
+    }
 
-    
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    handleSubmit(event, name) {
+        event.preventDefault();
+        //let data = new FormData();
+        //data.append("json", JSON.stringify({catalog_name: name }));
+
+        fetch("api/Catalog",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(name) 
+                })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.errMsg)
+                    alert(data.errMsg);
+                else
+                    this.props.history.push('/catalogs');
+            });
+    }
 
     render() {
         return (
-            <div>
+            <form onSubmit={(event) => this.handleSubmit(event, this.state.value)}>
                 <h1>Создание нового каталога</h1>
-                <input type="text" placeholder="Введите название"></input>
-                <input type="submit"></input>
-            </div>
+                <label>
+                    Введите название:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+                <table className="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Название поля</th>
+                        <th>Тип поля</th>
+                        <th><button type="button" className="btn btn-info">Добавить поле</button></th>
+                    </tr>
+                    </thead>
+                    <tbody>{this.renderFieldRow()}</tbody>
+                </table>
+            </form>
         );
     }
 }
