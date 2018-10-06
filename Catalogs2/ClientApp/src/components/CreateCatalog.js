@@ -5,32 +5,57 @@ export class CreateCatalog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { value: ''};
+        this.state = { catalogName: '', fieldName: '', fieldType: '', fields: [] };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.changeCatalogName = this.changeCatalogName.bind(this);
+        this.changeFieldName = this.changeFieldName.bind(this);
+        this.changeFieldType = this.changeFieldType.bind(this);
+        this.addField = this.addField.bind(this);
+        this.removeField = this.removeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.idGenerator = 0;
     }
 
-    renderFieldRow() {
+    changeCatalogName(event) {
+        this.setState({ catalogName: event.target.value });
+    }
+
+    changeFieldName(event) {
+        this.setState({ fieldName: event.target.value });
+    }
+
+    changeFieldType(event) {
+        this.setState({ fieldType: event.target.value });
+    }
+
+    addField() {
+        if (!this.state.fieldName || !this.state.fieldType)
+            return;
+        let fields = this.state.fields;
+        this.idGenerator++;
+        fields.push({ name: this.state.fieldName, type: this.state.fieldType, id: this.idGenerator });
+        this.setState({ fields: fields, fieldName: '', fieldType: '' });
+    }
+
+    renderTableBody(fields) {
         return (
-            <tr>
-                <td><input type="text" className="form-control" placeholder="Название поля" /></td>
-                <td>
-                    <select className="form-control">
-                        <option value="" disabled="" selected="">Выберите тип</option>
-                        <option value="str">str</option>
-                        <option value="boolean">boolean</option>
-                        <option value="integer">integer</option>
-                        <option value="date">date</option>
-                    </select>
-                </td>
-                <td><button type="button" className="btn btn-danger">Remove</button></td>
-            </tr>
+            <tbody>
+            {
+                fields.map(field =>
+                    <tr key={field.fieldId}>
+                        <td>{field.name}</td>
+                        <td>{field.type}</td>
+                        <td><button onClick={() => this.removeField(field.id)} type="button" className="btn btn-danger">Remove</button></td>
+                    </tr>
+                )
+            }
+            </tbody>
         );
     }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
+    removeField(id) {
+        let updatedFields = this.state.fields.filter(field => field.id !== id)
+        this.setState({ fields: updatedFields });
     }
 
     handleSubmit(event, name) {
@@ -57,24 +82,50 @@ export class CreateCatalog extends Component {
 
     render() {
         return (
-            <form onSubmit={(event) => this.handleSubmit(event, this.state.value)}>
-                <h1>Создание нового каталога</h1>
-                <label>
-                    Введите название:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-                <table className="table table-hover">
-                    <thead>
+            <div>
+                <br/>
+                <form>
+                    <div className="form-group">
+                        <label>Catalog name</label>
+                        <input type="text" onChange={this.changeCatalogName} value={this.state.catalogName} className="form-control" placeholder="Catalog name" />
+                    </div>
+                    <br/>
+                    <div className="form-row">
+
+                        
+                        <div className="form-group col-md-9">
+                            <label>Field Name</label>
+                            <input type="text" value={this.state.fieldName} onChange={this.changeFieldName} className="form-control" placeholder="Field Name" />
+                        </div>
+                        <div className="form-group col-md-2">
+                            <label>Field Type</label>
+                            <select className="form-control" value={this.state.fieldType} onChange={this.changeFieldType}>
+                                <option value="" disabled="">Choose type</option>
+                                <option value="str">str</option>
+                                <option value="boolean">boolean</option>
+                                <option value="integer">integer</option>
+                                <option value="date">date</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-1">
+                            <label>Add field</label>
+                            <button onClick={() => this.addField()} type="button" className="form-control btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" className="btn btn-primary">Save catalog</button>
+                </form>
+            <table className="table table-hover">
+                <thead>
                     <tr>
-                        <th>Название поля</th>
-                        <th>Тип поля</th>
-                        <th><button type="button" className="btn btn-info">Добавить поле</button></th>
+                        <th>Field Name</th>
+                        <th>Field Type</th>
+                        <th></th>
                     </tr>
-                    </thead>
-                    <tbody>{this.renderFieldRow()}</tbody>
-                </table>
-            </form>
+                </thead>
+                {this.renderTableBody(this.state.fields)}
+            </table>
+            </div>
         );
     }
 }
