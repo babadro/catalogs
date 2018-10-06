@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Catalogs2.Models;
 using Dapper;
 using DomainCore;
 using Microsoft.AspNetCore.Http;
@@ -36,15 +37,15 @@ namespace Catalogs2.Controllers
 
         // POST: api/Catalog
         [HttpPost]
-        public IActionResult Create([FromBody] string name)
+        public IActionResult Create([FromBody] CatalogInput input)
         {
-            if (name == "" || string.IsNullOrWhiteSpace(name))
-                return new JsonResult(new { errMsg = "Invalid catalog name" });
+            if (!ModelState.IsValid)
+                return new JsonResult(new { errMsg = "Catalog input is invalid" });
             using (IDbConnection db = _dbConnection)
             {
                 try
                 {
-                    db.Query("[dbo].[Create_Catalog]", new { catalog_name = name },
+                    db.Query("[dbo].[Create_Catalog]", new { catalog_name = input.Name },
                         commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)

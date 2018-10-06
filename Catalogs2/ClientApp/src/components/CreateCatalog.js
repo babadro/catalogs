@@ -33,7 +33,7 @@ export class CreateCatalog extends Component {
             return;
         let fields = this.state.fields;
         this.idGenerator++;
-        fields.push({ name: this.state.fieldName, type: this.state.fieldType, id: this.idGenerator });
+        fields.push({ name: this.state.fieldName, fType: this.state.fieldType, id: this.idGenerator });
         this.setState({ fields: fields, fieldName: '', fieldType: '' });
     }
 
@@ -44,7 +44,7 @@ export class CreateCatalog extends Component {
                 fields.map(field =>
                     <tr key={field.fieldId}>
                         <td>{field.name}</td>
-                        <td>{field.type}</td>
+                        <td>{field.fType}</td>
                         <td><button onClick={() => this.removeField(field.id)} type="button" className="btn btn-danger">Remove</button></td>
                     </tr>
                 )
@@ -58,18 +58,18 @@ export class CreateCatalog extends Component {
         this.setState({ fields: updatedFields });
     }
 
-    handleSubmit(event, name) {
+    handleSubmit(event, state) {
         event.preventDefault();
         //let data = new FormData();
         //data.append("json", JSON.stringify({catalog_name: name }));
-
+        let data = {name: state.catalogName, fields: state.fields}
         fetch("api/Catalog",
             {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(name) 
+                body: JSON.stringify(data) 
                 })
             .then(response => response.json())
             .then(data => {
@@ -84,7 +84,7 @@ export class CreateCatalog extends Component {
         return (
             <div>
                 <br/>
-                <form>
+                <form onSubmit={(event) => this.handleSubmit(event, this.state)}>
                     <div className="form-group">
                         <label>Catalog name</label>
                         <input type="text" onChange={this.changeCatalogName} value={this.state.catalogName} className="form-control" placeholder="Catalog name" />
