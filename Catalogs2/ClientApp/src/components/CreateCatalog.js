@@ -42,7 +42,7 @@ export class CreateCatalog extends Component {
             <tbody>
             {
                 fields.map(field =>
-                    <tr key={field.fieldId}>
+                    <tr key={field.id}>
                         <td>{field.name}</td>
                         <td>{field.fType}</td>
                         <td><button onClick={() => this.removeField(field.id)} type="button" className="btn btn-danger">Remove</button></td>

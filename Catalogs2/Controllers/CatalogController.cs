@@ -41,12 +41,19 @@ namespace Catalogs2.Controllers
         {
             if (!ModelState.IsValid)
                 return new JsonResult(new { errMsg = "Catalog input is invalid" });
+            var fields = new DataTable();
+            fields.Columns.Add("FieldName", typeof(string));
+            fields.Columns.Add("FieldType", typeof(int));
+            foreach (var field in input.Fields)
+                fields.Rows.Add(new {FieldName = field.Name, FieldType = field.FieldType});
+            var parameters = new DynamicParameters();
+            parameters.Add("@catalog_name", input.Name);
+            parameters.Add("@field_list", new TableValuedParameter(fields));
             using (IDbConnection db = _dbConnection)
             {
                 try
                 {
-                    db.Query("[dbo].[Create_Catalog]", new { catalog_name = input.Name },
-                        commandType: CommandType.StoredProcedure);
+                    db.Query("[dbo].[Create_Catalog]", parameters, commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
                 {
