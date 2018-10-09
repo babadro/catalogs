@@ -30,9 +30,21 @@ namespace Catalogs2.Controllers
 
         // GET: api/Catalog/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public JsonResult Get(int id)
         {
-            return "value";
+            using (IDbConnection db = _dbConnection)
+            {
+                try
+                {
+                    var result = db.Query($"SLECT * FROM field_values fv JOIN fields f ON fv.field_id = f.ID WHERE f.catalog_id = {id}");
+                }
+                catch (Exception ex)
+                {
+                    return new JsonResult(new { errMsg = ex.Message });
+                }
+
+            }
+            return new JsonResult(null);
         }
 
         // POST: api/Catalog
