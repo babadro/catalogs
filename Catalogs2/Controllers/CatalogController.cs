@@ -45,10 +45,10 @@ namespace Catalogs2.Controllers
             fields.Columns.Add("FieldName", typeof(string));
             fields.Columns.Add("FieldType", typeof(int));
             foreach (var field in input.Fields)
-                fields.Rows.Add(new {FieldName = field.Name, FieldType = field.FieldType});
+                fields.Rows.Add(field.Name, field.FieldType);
             var parameters = new DynamicParameters();
             parameters.Add("@catalog_name", input.Name);
-            parameters.Add("@field_list", new TableValuedParameter(fields));
+            parameters.Add("@field_list", fields.AsTableValuedParameter());
             using (IDbConnection db = _dbConnection)
             {
                 try
