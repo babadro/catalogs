@@ -6,6 +6,7 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { CreateCatalog } from './components/CreateCatalog';
 import { Catalogs } from './components/Catalogs';
+import { Catalog } from './components/Catalog';
 
 export default class App extends Component {
   displayName = App.name
@@ -18,6 +19,7 @@ export default class App extends Component {
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/createcat' component={CreateCatalog} />
         <Route path='/catalogs' component={Catalogs} />
+        <Route path='/catalog' component={Catalog} />
       </Layout>
     );
   }

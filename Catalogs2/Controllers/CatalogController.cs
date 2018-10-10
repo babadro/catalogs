@@ -32,11 +32,17 @@ namespace Catalogs2.Controllers
         [HttpGet("{id}", Name = "Get")]
         public JsonResult Get(int id)
         {
+            IEnumerable<CatalogDto> dtos;
             using (IDbConnection db = _dbConnection)
             {
                 try
                 {
-                    var result = db.Query($"SLECT * FROM field_values fv JOIN fields f ON fv.field_id = f.ID WHERE f.catalog_id = {id}");
+                    dtos = db.Query<CatalogDto>($@"
+                        SELECT fv.ID as val_id, string_val, bool_val, int_val, date_val, element_id, f.ID as field_id, field_name, field_type
+                        FROM field_values fv
+                        RIGHT JOIN fields f ON fv.field_id = f.ID
+                        WHERE f.catalog_id = {id}
+                    ");
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +50,9 @@ namespace Catalogs2.Controllers
                 }
 
             }
-            return new JsonResult(null);
+            var grouping = dtos.GroupBy(dto => dto.ElementId);
+
+            return new JsonResult(grouping);
         }
 
         // POST: api/Catalog
