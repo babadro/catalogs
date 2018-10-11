@@ -6,11 +6,15 @@ namespace DomainCore
 {
     public class FieldValue
     {
-        public FieldValue(int id, int fieldId, int elId)
+        public FieldValue(int id, int fieldId, int elId, string stringVal, bool boolVal, int intVal, DateTime dateVal)
         {
             Id = id;
             FieldId = fieldId;
             ElementId = elId;
+            StringVal = stringVal;
+            BoolVal = boolVal;
+            IntVal = intVal;
+            DateVal = dateVal;
         }
         public int Id { get; set; }
         public int FieldId { get; set; }
@@ -18,6 +22,6 @@ namespace DomainCore
         public string StringVal { get; set; }
         public bool BoolVal { get; set; }
         public int IntVal { get; set; }
-        public DateTime DateVale { get; set; }
+        public DateTime DateVal { get; set; }
     }
 }

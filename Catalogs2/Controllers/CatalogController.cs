@@ -8,6 +8,7 @@ using Dapper;
 using DomainCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Catalogs2.Controllers
 {
@@ -50,9 +51,13 @@ namespace Catalogs2.Controllers
                 }
 
             }
-            var grouping = dtos.GroupBy(dto => dto.ElementId);
+            var cols = dtos.GroupBy(dto => dto.FieldId).Select(g => g.First()).Select(dto => new Field(dto.FieldId, dto.FieldName, dto.FieldType));
+            var rows = dtos
+                .GroupBy(dto => dto.ElementId)
+                .Where(g => g.First().ElementId != 0)
+                .ToDictionary(g => g.Key, g => g.Select(dto => new Cell(dto.ValueId, dto.FieldId, dto.FieldType, dto.StringVal, dto.BoolVal, dto.IntVal, dto.DateVal)));
 
-            return new JsonResult(grouping);
+            return new JsonResult(new CatalogTable(cols, rows));
         }
 
         // POST: api/Catalog
