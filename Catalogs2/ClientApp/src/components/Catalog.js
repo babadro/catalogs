@@ -10,18 +10,123 @@ export class Catalog extends Component {
         fetch('api/catalog/' + props.history.location.state.catalogId)
             .then(response => response.json())
             .then(data => {
-                this.setState({ catalogInfo: data, loading: false });
+                this.setState({ cols: data.cols, rows: data.rows, loading: false });
             });
     }
     //props.history.location.state.catalogId
     renderCatalogTable() {
-        return(<div>Catalog here</div>);
+        return (
+            <table className="table table-hover">
+                {this.renderHeaderTable(this.state.cols)}
+                {this.renderTableBody(this.state.rows)}
+            </table>
+            );
     }
 
+    renderHeaderTable(input) {
+        let cols = [];
+        for (let col of input) {
+            switch (col.fieldType) {
+            case 0:
+                cols.push(
+                    <th scope="col" key={col.id}>
+                            <div className="form-group">
+                                <input type="text" className="form-control" id="" placeholder="Строка" />
+                            </div>
+                            Строка
+                    </th>
+                    );
+                    break;
+                case 1:
+                    cols.push(
+                        <th scope="col" key={col.id}>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" name="survey" id="Radios1" value="Yes" />
+                                    True
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" name="survey" id="Radios2" value="No" />
+                                    False
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" name="survey" id="Radios3" value="" />
+                                    All
+                                </label>
+                            </div>
+                            Булево
+                        </th>
+                    );
+                    break;
+                case 2:
+                    cols.push(
+                        <th scope="col" key={col.id}>
+                            <div className="form-group">
+                                From:
+                                <input type="number" className="form-control" />
+                                To:
+                                <input type="number" className="form-control" />
+                            </div>
+                            Число
+                        </th>
+                    );
+                    break;
+                case 3:
+                    cols.push(
+                        <th scope="col" key={col.id}>
+                            <div className="form-group">
+                                From:
+                                <input className="form-control" type="datetime-local" id="" />
+                                To:
+                                <input className="form-control" type="datetime-local" id="" />
+                            </div>
+                            Дата
+                        </th>
+                    );
+                    break;
+            }
+        }
+        return (
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                        {cols}
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+        );
+    }
+
+    renderTableBody(elements) {
+        let rows = [];
+        for (let elementId of Object.keys(elements)) {
+            let cells = [];
+            for (let field of elements[elementId]) {
+                cells.push(<td key={cell.id}>{}</td>)
+            }
+            rows.push(
+                <tr key={elementId}>
+                    <td>{elementId}</td>
+                    <td>Otto</td>
+                    <td>True</td>
+                    <td>311</td>
+                    <td>25 декабря</td>
+                    <td>
+                        <button type="button" className="btn btn-sm">Удаление</button>
+                    </td>
+                </tr>
+            );
+        }
+        return (<tbody>{rows}</tbody>);
+    }
     render() {
-        let contents = this.state.loading
+        let table = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCatalogTable(this.state.forecasts);
+            : this.renderCatalogTable();
 
         return (
             <div>
@@ -32,89 +137,8 @@ export class Catalog extends Component {
                 <button type="button" className="btn btn-danger">
                     <span className="glyphicon"></span> Reset filters
                 </button>
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">
-                            <div className="form-group">
-                                <input type="text" className="form-control" id="" placeholder="Строка"/>
-                            </div>
-                            Строка
-                        </th>
-                        <th scope="col">
-                            <div className="radio">
-                                <label>
-                                    <input type="radio" name="survey" id="Radios1" value="Yes"/>
-                                    True
-                                </label>
-                            </div>
-                            <div className="radio">
-                                <label>
-                                    <input type="radio" name="survey" id="Radios2" value="No"/>
-                                    False
-                                </label>
-                            </div>
-                            <div className="radio">
-                                <label>
-                                    <input type="radio" name="survey" id="Radios3" value=""/>
-                                    All
-                                </label>
-                            </div>
-                            Булево
-                        </th>
-                        <th scope="col">
-                            <div className="form-group">
-                                From:
-                                <input type="number" className="form-control"/>
-                                To:
-                                <input type="number" className="form-control"/>
-                            </div>
-                            Число
-                        </th>
-                        <th scope="col">
-                            <div className="form-group">
-                                From:
-                                <input className="form-control" type="datetime-local" id=""/>
-                                To:
-                                <input className="form-control" type="datetime-local" id=""/>
-                            </div>
-                            Дата
-                        </th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Otto</td>
-                        <td>True</td>
-                        <td>311</td>
-                        <td>25 декабря</td>
-                        <td>
-                            <button type="button" className="btn btn-sm">Удаление</button>
-                        </td>
-                        <td>
-                            <button type="button" className="btn btn-sm">Публикация</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Otto</td>
-                        <td>True</td>
-                        <td>311</td>
-                        <td>25 декабря</td>
-                        <td>
-                            <button type="button" className="btn btn-sm">Удаление</button>
-                        </td>
-                        <td>
-                            <button type="button" className="btn btn-sm">Публикация</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                {table}
+            </div>
         );
     }
 }
