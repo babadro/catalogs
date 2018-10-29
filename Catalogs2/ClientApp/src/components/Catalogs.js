@@ -55,7 +55,7 @@ export class Catalogs extends Component {
                         <button onClick={() => this.deleteCatalog(catalogId)} type="button" className="btn btn-sm">Удаление</button>
                     </td>
                     <td>
-                        <button onClick={() => this.props.history.push({pathname: '/catalog', state: { catalogId: catalogId }})} type="button" className="btn btn-sm">Просмотр</button>
+                        <button onClick={() => this.props.history.push({pathname: '/catalog/' + catalogId, state: { catalogId: catalogId }})} type="button" className="btn btn-sm">Просмотр</button>
                     </td>
                     <td>
                         <button type="button" className="btn btn-sm">Публикация</button>

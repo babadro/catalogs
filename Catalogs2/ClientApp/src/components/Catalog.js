@@ -7,7 +7,7 @@ export class Catalog extends Component {
         super(props);
         this.state = { forecasts: [], loading: true };
 
-        fetch('api/catalog/' + props.history.location.state.catalogId)
+        fetch('api' + props.location.pathname)
             .then(response => response.json())
             .then(data => {
                 this.setState({ cols: data.cols, rows: data.rows, loading: false });
