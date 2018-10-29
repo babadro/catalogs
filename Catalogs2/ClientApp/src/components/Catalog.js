@@ -17,13 +17,13 @@ export class Catalog extends Component {
     renderCatalogTable() {
         return (
             <table className="table table-hover">
-                {this.renderHeaderTable(this.state.cols)}
+                {this.renderTableHeader(this.state.cols)}
                 {this.renderTableBody(this.state.rows)}
             </table>
             );
     }
 
-    renderHeaderTable(input) {
+    renderTableHeader(input) {
         let cols = [];
         for (let col of input) {
             switch (col.fieldType) {
@@ -106,15 +106,12 @@ export class Catalog extends Component {
         for (let elementId of Object.keys(elements)) {
             let cells = [];
             for (let field of elements[elementId]) {
-                cells.push(<td key={cell.id}>{}</td>)
+                cells.push(<td key={field.id}>{field.val}</td>);
             }
             rows.push(
                 <tr key={elementId}>
                     <td>{elementId}</td>
-                    <td>Otto</td>
-                    <td>True</td>
-                    <td>311</td>
-                    <td>25 декабря</td>
+                    {cells}
                     <td>
                         <button type="button" className="btn btn-sm">Удаление</button>
                     </td>
