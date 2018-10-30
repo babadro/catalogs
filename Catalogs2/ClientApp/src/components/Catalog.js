@@ -134,6 +134,9 @@ export class Catalog extends Component {
                 <button type="button" className="btn btn-danger">
                     <span className="glyphicon"></span> Reset filters
                 </button>
+                <button type="button" className="btn btn-default" onClick={() => this.props.history.push('/createElement')}>
+                    <span className="glyphicon"></span> Create new element
+                </button>
                 {table}
             </div>
         );
