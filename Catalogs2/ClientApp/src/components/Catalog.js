@@ -12,6 +12,8 @@ export class Catalog extends Component {
             .then(data => {
                 this.setState({ cols: data.cols, rows: data.rows, loading: false });
             });
+
+        this.renderCreateElementForm = this.renderCreateElementForm(this);
     }
     //props.history.location.state.catalogId
     renderCatalogTable() {
@@ -99,6 +101,10 @@ export class Catalog extends Component {
                 </tr>
             </thead>
         );
+    }
+
+    renderCreateElementForm(catalogId) {
+        this.setState({ showCreateForm: true, currentCatalog: catalogId });
     }
 
     renderTableBody(elements) {
