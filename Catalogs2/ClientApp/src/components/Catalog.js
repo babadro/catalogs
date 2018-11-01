@@ -5,15 +5,13 @@ export class Catalog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { forecasts: [], loading: true };
+        this.state = { loading: true };
 
         fetch('api' + props.location.pathname)
             .then(response => response.json())
             .then(data => {
                 this.setState({ cols: data.cols, rows: data.rows, loading: false });
             });
-
-        this.renderCreateElementForm = this.renderCreateElementForm(this);
     }
     //props.history.location.state.catalogId
     renderCatalogTable() {
@@ -101,10 +99,6 @@ export class Catalog extends Component {
                 </tr>
             </thead>
         );
-    }
-
-    renderCreateElementForm(catalogId) {
-        this.setState({ showCreateForm: true, currentCatalog: catalogId });
     }
 
     renderTableBody(elements) {

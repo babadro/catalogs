@@ -5,7 +5,9 @@ export class CreateElement extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        //this.state = { loading: true };
+
+        //fetch('api/Element/Create/' + props.location.pa)
     }
 
     
