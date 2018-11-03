@@ -6,6 +6,7 @@ export class Catalog extends Component {
     constructor(props) {
         super(props);
         this.state = { loading: true };
+        this.catalogId = this.props.match.params.catalogid;
 
         fetch('api' + props.location.pathname)
             .then(response => response.json())
@@ -134,7 +135,7 @@ export class Catalog extends Component {
                 <button type="button" className="btn btn-danger">
                     <span className="glyphicon"></span> Reset filters
                 </button>
-                <button type="button" className="btn btn-default" onClick={() => this.props.history.push('/Element/Create/' + )}>
+                <button type="button" className="btn btn-default" onClick={() => this.props.history.push('/Element/Create/' + this.catalogId)}>
                     <span className="glyphicon"></span> Create new element
                 </button>
                 {table}

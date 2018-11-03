@@ -36,9 +36,8 @@ namespace Catalogs2.Controllers
             return "value";
         }
 
-        // GET: api/Element/create/5
-        [HttpGet("{catalogId}", Name = "Fields")]
-        [ActionName("Create")]
+        // GET: api/Element/Create/5
+        [HttpGet("Create/{catalogId}", Name = "Fields")]
         public JsonResult Fields(int catalogId)
         {
             IEnumerable<Field> fields;
@@ -46,7 +45,7 @@ namespace Catalogs2.Controllers
             {
                 try
                 {
-                    fields = db.Query<Field>($"SELECT * FROM FIELDS WHERE catalog_id = {catalogId}");
+                    fields = db.Query<Field>($"SELECT ID, field_name as fieldName, field_type as fieldType FROM FIELDS WHERE catalog_id = {catalogId}");
                 }
                 catch (Exception ex)
                 {

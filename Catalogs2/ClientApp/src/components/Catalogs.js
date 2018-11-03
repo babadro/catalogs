@@ -5,7 +5,7 @@ export class Catalogs extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { catalogs: [], loading: false };
+        this.state = { catalogs: [], loading: true };
         this.versionBtn = this.versionBtn.bind(this);
 
         fetch('api/SampleData/catalogs')
@@ -82,14 +82,6 @@ export class Catalogs extends Component {
                 );
             }
         }
-        return (<tbody>{rows}</tbody>);
-    }
-
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : this.renderCatalogsTable(this.state.catalogs);
-
         return (
             <div>
                 <h1>Catalog list</h1>
@@ -104,9 +96,17 @@ export class Catalogs extends Component {
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    {contents}
+                    <tbody>{rows}</tbody>
                 </table>
             </div>
         );
+    }
+
+    render() {
+        let contents = this.state.loading
+            ? <p><em>Loading...</em></p>
+            : this.renderCatalogsTable(this.state.catalogs);
+
+        return (<div>{contents}</div>);
     }
 }

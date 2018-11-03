@@ -5,16 +5,24 @@ export class CreateElement extends Component {
 
     constructor(props) {
         super(props);
-        //this.state = { loading: true };
+        this.catalogId = this.props.match.params.catalogid;
+        this.state = { loading: false };
 
-        //fetch('api/Element/Create/' + props.location.pa)
+        fetch('api/Element/Create/' + this.catalogId)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ fields: data, loading: false});
+            });
     }
 
     
 
     render() {
+        let contents = this.state.loading
+            ? <p><em>Loading...</em></p>
+            : <div>Таблица</div>
         return (
-            <div>Таблица</div>
+            <div>{contents}</div>
         );
     }
 }

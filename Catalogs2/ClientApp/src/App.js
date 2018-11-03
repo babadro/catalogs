@@ -20,7 +20,7 @@ export default class App extends Component {
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/createcat' component={CreateCatalog} />
         <Route path='/catalogs' component={Catalogs} />
-        <Route path='/catalog' component={Catalog} />
+        <Route path='/catalog/:catalogid' component={Catalog} />
         <Route path='/element/create/:catalogid' component={CreateElement} />
       </Layout>
     );
