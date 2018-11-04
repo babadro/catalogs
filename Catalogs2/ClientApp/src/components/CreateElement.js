@@ -11,13 +11,24 @@ export class CreateElement extends Component {
         fetch('api/Element/Create/' + this.catalogId)
             .then(response => response.json())
             .then(data => {
-                this.setState({ fields: data, loading: false});
+                this.setState({ fields: data, fieldValues: {}, loading: false});
             });
+    }
+
+    handleSubmit(event, state) {
+        event.preventDefault();
+
+    }
+
+    changeFieldValue(event, fieldId) {
+        fieldValues = this.state.fieldValues;
+        fieldValues[fieldId] = event.target.value;
+        this.setState({ fieldValues: fieldValues });
     }
 
     renderForm(fields) {
         return (
-            <form>
+            <form onSubmit={(event) => this.handleSubmit(event, this.state)}>
                 {fields.map(field =>
                     <div className="form-row" key={field.id}>
                         <div className="form-group">
@@ -42,7 +53,7 @@ export class CreateElement extends Component {
                     <div>
                         <div className="radio">
                             <label>
-                                <input type="radio" name="survey" id="Radios1" value="Yes" />
+                                <input type="radio" onChange={(event) => this.changeField(event, field.id)} name="survey" id="Radios1" value="Yes" />
                                 True
                             </label>
                         </div>
