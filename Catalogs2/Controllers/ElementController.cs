@@ -57,9 +57,10 @@ namespace Catalogs2.Controllers
         }
 
         // POST: api/Element
-        [HttpPost]
-        public void Create([FromBody] string value)
+        [HttpPost("{catalogId}")]
+        public JsonResult Create([FromBody] Dictionary<int, object> fieldValues)
         {
+            return new JsonResult(null);
         }
 
         // PUT: api/Element/5
