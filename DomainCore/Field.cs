@@ -6,11 +6,11 @@ namespace DomainCore
 {
     public class Field
     {
-        public Field(int id, string name, FieldType ftype)
+        public Field(int id, string fieldName, FieldType fieldType)
         {
             Id = id;
-            Name = name;
-            FieldType = ftype;
+            Name = fieldName;
+            FieldType = fieldType;
         }
         public int Id { get; set; }
         public string Name { get; set; }
